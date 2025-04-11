@@ -73,7 +73,7 @@ int main() {
                 printf("Processos em tramitação:\n");
                 for (int i = 0; i < n; i++) {
                     int dias = calcularDiasTramitando(processos[i].data_ajuizamento, data_atual);
-                    printf("Processo ID %d está em tramitação há %d dias.\n", processos[i].id, dias);
+                    printf("Processo ID %d está em tramitação ha %d dias.\n", processos[i].id, dias);
                 }
                 break;
             }
