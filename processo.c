@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include "processo.h"
-#include <time.h>
 
 //1. Ordenar, em ordem crescente, o conjunto de dados a partir do atributo “id”;
 void ordenarPorId(Processo processos[], int esq, int dir){
@@ -34,7 +30,14 @@ int particao(Processo V[], int esq, int dir){
     }
     return i;
 }
-
+bool contem_char(char* str, char c) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] == c) {
+            return true;
+        }
+    }
+    return false;
+}
 void salvarOrdenadoPorId(const char* nomeArquivo, Processo processos[], int n) {
     FILE* f = fopen(nomeArquivo, "w");
     if (f == NULL) {
@@ -47,15 +50,18 @@ void salvarOrdenadoPorId(const char* nomeArquivo, Processo processos[], int n) {
 
     for (int i = 0; i < n; i++) {
         // Escreve os campos do processo no formato correto
-        fprintf(f, "%d,\"%s\",\"%s.000\",\"{%s}\",\"{%s}\",%d\n",
+
+        fprintf(f, "%d,\"%s\",\"%s.000\",",
             processos[i].id,
             processos[i].numero,
-            processos[i].data_ajuizamento,
-            processos[i].id_classe,
-            processos[i].id_assunto,
-            processos[i].ano_eleicao);
-    }
+            processos[i].data_ajuizamento);
 
+        contem_char(processos[i].id_classe, ',') ? fprintf(f, "\"{%s}\",",processos[i].id_classe) : fprintf(f, "{%s},",processos[i].id_classe);
+        contem_char(processos[i].id_assunto, ',') ? fprintf(f, "\"{%s}\",",processos[i].id_assunto) : fprintf(f, "{%s},",processos[i].id_assunto);
+            
+        fprintf(f, "%d\n",
+            processos[i].ano_eleicao);
+        }
     fclose(f);
 }
 
@@ -99,14 +105,19 @@ void salvarOrdenadoPorData(const char* nomeArquivo, Processo processos[], int n)
 
     // Escreve cada processo no arquivo
     for (int i = 0; i < n; i++) {
-        fprintf(f, "%d,\"%s\",\"%s.000\",\"{%s}\",\"{%s}\",%d\n",
+        // Escreve os campos do processo no formato correto
+
+        fprintf(f, "%d,\"%s\",\"%s.000\",",
             processos[i].id,
             processos[i].numero,
-            processos[i].data_ajuizamento,
-            processos[i].id_classe,
-            processos[i].id_assunto,
+            processos[i].data_ajuizamento);
+
+        contem_char(processos[i].id_classe, ',') ? fprintf(f, "\"{%s}\",",processos[i].id_classe) : fprintf(f, "{%s},",processos[i].id_classe);
+        contem_char(processos[i].id_assunto, ',') ? fprintf(f, "\"{%s}\",",processos[i].id_assunto) : fprintf(f, "{%s},",processos[i].id_assunto);
+            
+        fprintf(f, "%d\n",
             processos[i].ano_eleicao);
-    }
+        }
 
     fclose(f);
 }

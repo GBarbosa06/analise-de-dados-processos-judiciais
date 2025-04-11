@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "processo.h"
 
 int main() {
@@ -12,12 +10,12 @@ int main() {
    
     printf("Total de processos carregados: %d\n", n);
     int escolha = 0;
-    printf("Escolha uma opção:\n");
+    printf("Escolha uma opcao:\n");
     printf("1. Ordenar por ID (crescente)\n");
     printf("2. Ordenar por data (decrescente)\n");
     printf("3. Contar por classe\n");
     printf("4. Identificar quantos assuntos constam\n");
-    printf("5. Listar processos que estão vinculados a mais de um assunto\n");
+    printf("5. Listar processos que estao vinculados a mais de um assunto\n");
     printf("6. Calcular dias tramitando\n");
     printf("7. Sair\n");
     scanf("%d", &escolha);
