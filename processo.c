@@ -112,17 +112,12 @@ void salvarOrdenadoPorData(const char* nomeArquivo, Processo processos[], int n)
 }
 
 //3. Contar quantos processos estão vinculados a um determinado “id_classe”;
-int contarPorClasse(Processo processos[], int n, const char* id_classe) {
-    int contador = 0;
-    for (int i = 0; i < n; i++) {
-        if (strcmp(processos[i].id_classe, id_classe) == 0) {
-            contador++;
-        }
-    }
-    return contador;
+int contarPorClasse(Processo processos[], int n, const char* id_classe){
 }
 
 //4. Identificar quantos “id_assuntos” constam nos processos presentes na base de dados;
+
+
 int contarAssuntosUnicos(Processo processos[], int n) {
     char assuntosUnicos[1000][20]; // Array para armazenar assuntos únicos (limite de 1000 assuntos)
     int totalUnicos = 0;
@@ -154,7 +149,7 @@ int contarAssuntosUnicos(Processo processos[], int n) {
     return totalUnicos;
 }
 
-=======
+
 //5. Listar todos os processos que estão vinculados a mais de um assunto; e
 void listarMultiplosAssuntos(Processo processos[], int total)
  {
@@ -175,6 +170,7 @@ void listarMultiplosAssuntos(Processo processos[], int total)
 int calcularDiasTramitando(Processo p, const char* data_atual){
     //É mais usável se verificando todo o arquivo de processos em busca do ID, mas é mais fácil criar passando Processo p, const char* data_atual
     //Passar como parâmetro a data atual ou usar a biblioteca time.h pra fazer isso automaticamente
+
 }
 
 
@@ -370,5 +366,3 @@ int calcularDiasTramitando(const char* data_ajuizamento, const char* data_atual)
     double segundos = difftime(t_final, t_inicio);
     return (int)(segundos / (60 * 60 * 24));
 }
-=======
-
