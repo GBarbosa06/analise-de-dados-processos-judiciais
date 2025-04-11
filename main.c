@@ -29,22 +29,23 @@ int main() {
             printf("Processos ordenados por ID. Novo arquivo criado\n");
             break; 
         
-    //Os cases são feitos assim pra facilitar a leitura, mas não é necessário fazer assim, só pra ficar mais fácil de entender o que cada um faz
         case 2:
             ordenarPorData(processos, 0, n - 1); 
             salvarOrdenadoPorData("processos_ordenados_por_data.csv", processos, n); 
             printf("Processos ordenados por data. Novo arquivo criado\n");
             break;
             
-            case 3:{
+        case 3:
+        {
             char id_classe[10];
-    printf("Digite o id_classe que deseja buscar: ");
-    scanf("%s", id_classe);
-    int quantidade = contarPorClasse(processos, n, id_classe);
-    printf("Total de processos com id_classe %s: %d\n", id_classe, quantidade);
-    break;
+            printf("Digite o id_classe que deseja buscar: ");
+            scanf("%s", id_classe);
+            int quantidade = contarPorClasse(processos, n, id_classe);
+            printf("Total de processos com id_classe %s: %d\n", id_classe, quantidade);
+            break;
         }
-        case 4:{
+        case 4:
+        {
             int total_assuntos = contarAssuntosUnicos(processos, n);
             printf("Total de assuntos unicos: %d\n", total_assuntos);
             break;
@@ -52,13 +53,53 @@ int main() {
         case 5:
             listarMultiplosAssuntos(processos, n);
             break;
-        case 6:{
+        case 6:
+        {
+            int id_procurado;
             char data_atual[11];
             printf("Digite a data atual (dd/mm/aaaa): ");
             scanf("%s", data_atual);
+
+            // Validar formato da data
+            int dia, mes, ano;
+            if (sscanf(data_atual, "%d/%d/%d", &dia, &mes, &ano) != 3) {
+                printf("Erro: formato de data inválido. Use dd/mm/aaaa.\n");
+                break;
+            }
+
+            printf("Deseja consultar por ID ou deseja ver todos os processos? (1 para ID, 2 para todos): ");
+            int opcao;
+            scanf("%d", &opcao);
+
+            if (opcao == 2) {
+                printf("Processos em tramitação:\n");
+                for (int i = 0; i < n; i++) {
+                    int dias = calcularDiasTramitando(processos[i].data_ajuizamento, data_atual);
+                    printf("Processo ID %d está em tramitação há %d dias.\n", processos[i].id, dias);
+                }
+                break;
+            }
+
+            if (opcao != 1) {
+                printf("Opcao invalida. Escolha 1 para consultar por ID ou 2 para consultar todos os processos.\n");
+                break;
+            }
+
+            printf("Digite o ID do processo que deseja consultar: ");
+            scanf("%d", &id_procurado);
+
+            int encontrado = 0;
             for (int i = 0; i < n; i++) {
-                int dias = calcularDiasTramitando(processos[i], data_atual);
-                printf("Processo ID %d está em tramitação ha %d dias.\n", processos[i].id, dias);
+                if (processos[i].id == id_procurado) {
+                    int dias = calcularDiasTramitando(processos[i].data_ajuizamento, data_atual);
+                    printf("Processo ID %d esta em tramitacao ha %d dias.\n", processos[i].id, dias);
+                    encontrado = 1;
+                    break;
+                }
+            }
+
+            if (!encontrado) {
+                printf("Processo com ID %d nao encontrado.\n", id_procurado);
             }
             break;
         }

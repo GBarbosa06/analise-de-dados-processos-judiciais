@@ -47,7 +47,7 @@ void salvarOrdenadoPorId(const char* nomeArquivo, Processo processos[], int n) {
 
     for (int i = 0; i < n; i++) {
         // Escreve os campos do processo no formato correto
-        fprintf(f, "%d,\"%s\",\"%s.000\",\"{%s}\",%s}\",%d\n",
+        fprintf(f, "%d,\"%s\",\"%s.000\",\"{%s}\",\"{%s}\",%d\n",
             processos[i].id,
             processos[i].numero,
             processos[i].data_ajuizamento,
@@ -112,7 +112,14 @@ void salvarOrdenadoPorData(const char* nomeArquivo, Processo processos[], int n)
 }
 
 //3. Contar quantos processos estão vinculados a um determinado “id_classe”;
-int contarPorClasse(Processo processos[], int n, const char* id_classe){
+int contarPorClasse(Processo processos[], int n, const char* id_classe) {
+    int contador = 0;
+    for (int i = 0; i < n; i++) {
+        if (strcmp(processos[i].id_classe, id_classe) == 0) {
+            contador++;
+        }
+    }
+    return contador;
 }
 
 //4. Identificar quantos “id_assuntos” constam nos processos presentes na base de dados;
@@ -148,31 +155,6 @@ int contarAssuntosUnicos(Processo processos[], int n) {
 
     return totalUnicos;
 }
-
-
-//5. Listar todos os processos que estão vinculados a mais de um assunto; e
-void listarMultiplosAssuntos(Processo processos[], int total)
- {
-    printf("\nProcessos com mais de um assunto:\n");
-    printf("==================================\n");
-    for (int i = 0; i < total; i++) {
-        if (strchr(processos[i].id_assunto, ',') != NULL) {
-            printf("ID: %d | Numero: %s | Assuntos: %s}\"\n",
-                   processos[i].id,
-                   processos[i].numero,
-                   processos[i].id_assunto);
-        }
-    }
-}
-
-
-//6. Indicar a quantos dias um processo está em tramitação na justiça.
-int calcularDiasTramitando(Processo p, const char* data_atual){
-    //É mais usável se verificando todo o arquivo de processos em busca do ID, mas é mais fácil criar passando Processo p, const char* data_atual
-    //Passar como parâmetro a data atual ou usar a biblioteca time.h pra fazer isso automaticamente
-
-}
-
 
 int carregarProcessos(const char* nomeArquivo, Processo processos[], int max) {
     FILE* f = fopen(nomeArquivo, "r");
@@ -264,7 +246,7 @@ int carregarProcessos(const char* nomeArquivo, Processo processos[], int max) {
                 }
             }
             else {
-                campo++;  // pula a primeira chave
+                campo+=3;  // pula a primeira chave
             }
 
             // Agora procura as chaves

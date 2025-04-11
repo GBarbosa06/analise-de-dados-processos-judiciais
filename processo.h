@@ -21,7 +21,7 @@ int particaoData(Processo V[], int esq, int dir);
 int contarPorClasse(Processo processos[], int n, const char* id_classe);
 int contarAssuntosUnicos(Processo processos[], int n);
 void listarMultiplosAssuntos(Processo processos[], int total);
-int calcularDiasTramitando(Processo p, const char* data_atual);
+int calcularDiasTramitando(const char* data_ajuizamento, const char* data_atual);
 int carregarProcessos(const char* nomeArquivo, Processo processos[], int max);
 void limparQuebraLinha(char* str);
 
